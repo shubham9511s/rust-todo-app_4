@@ -15,7 +15,7 @@ COPY Cargo.toml Cargo.lock ./
 RUN cargo build-deps --release
 
 # Copy the source code to the container
-COPY . .
+COPY src /tmp/rust-app/src
 
 # Build the application
 RUN cargo build --release
