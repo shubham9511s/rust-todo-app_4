@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM rust:1 AS rust-builder
+FROM rust:1 AS builder
 
 # Install cargo-build-deps for better dependency caching
 RUN cargo install cargo-build-deps
@@ -15,7 +15,7 @@ COPY Cargo.toml Cargo.lock ./
 RUN cargo build-deps --release
 
 # Copy the source code to the container
-COPY src /tmp/rust-app/src
+COPY . .
 
 # Build the application
 RUN cargo build --release
@@ -35,7 +35,7 @@ WORKDIR /app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the built binary from the builder stage and change ownership
-COPY --from=rust-builder /tmp/rust-app/target/release/rust-app /app/rust-app
+COPY --from=builder /app/target/release/rust-app /app/rust-app
 
 # Set permissions and ownership
 RUN chown appuser:appgroup /app/rust-app && \
@@ -48,4 +48,4 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application
-CMD ["./app/rust-app"]
+CMD ["/app/rust-app"]
