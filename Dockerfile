@@ -1,21 +1,20 @@
-# Stage 1: Build stage
-FROM rust:1 AS builder
-
-# Install cargo-build-deps for better dependency caching
-RUN cargo install cargo-build-deps
+# Stage 1: Build stage (This dockerfile for the Ubuntu OS)
+FROM rust:1.79.0-slim AS builder
 
 # Create a new Rust binary project to leverage dependency caching
 RUN cd /tmp && USER=root cargo new --bin rust-app
-WORKDIR /tmp/rust-app
+WORKDIR /app/rust-app
 
 # Copy the Cargo.toml and Cargo.lock files to the container
 COPY Cargo.toml Cargo.lock ./
 
-# Build only the dependencies to cache them
-RUN cargo build-deps --release
+# Install necessary build tools and dependencies
+RUN apt-get update && \
+    apt-get install -y build-essential pkg-config libssl-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy the source code to the container
-COPY src /tmp/rust-app/src
+COPY . . 
 
 # Build the application
 RUN cargo build --release
@@ -35,7 +34,7 @@ WORKDIR /app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the built binary from the builder stage and change ownership
-COPY --from=builder /tmp/rust-app/. /app/rust-app
+COPY --from=builder /app/rust-app/target/release/rust-app . 
 
 # Set permissions and ownership
 RUN chown appuser:appgroup /app/rust-app && \
@@ -48,4 +47,5 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application
-CMD ["/app/rust-app"]
+CMD ["./app/rust-app"]
+
