@@ -2,8 +2,8 @@
 FROM rust:1.79.0-slim AS builder
 
 # Create a new Rust binary project to leverage dependency caching
-RUN cd /tmp && USER=root cargo new --bin rust-app
-WORKDIR /app/rust-app
+#RUN cd /tmp && USER=root cargo new --bin rust-app
+WORKDIR /app
 
 # Copy the Cargo.toml and Cargo.lock files to the container
 COPY Cargo.toml Cargo.lock ./
@@ -34,7 +34,7 @@ WORKDIR /app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the built binary from the builder stage and change ownership
-COPY --from=builder /app/rust-app/target/release/rust-app . 
+COPY --from=builder /app/target/release/rocket-app . 
 
 # Set permissions and ownership
 RUN chown appuser:appgroup /app/rust-app && \
@@ -47,5 +47,5 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application
-CMD ["./app/rust-app"]
+CMD ["./app/rocket-app"]
 
