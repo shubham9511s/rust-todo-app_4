@@ -37,8 +37,8 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY --from=builder /app/target/release/rocket-app . 
 
 # Set permissions and ownership
-RUN chown appuser:appgroup /app/rust-app && \
-    chmod +x /app/rust-app
+RUN chown appuser:appgroup /app/rocket-app && \
+    chmod +x /app/rocket-app
 
 # Switch to the non-root user
 USER appuser
