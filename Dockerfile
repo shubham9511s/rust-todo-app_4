@@ -48,4 +48,4 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application
-CMD ["cargo","run"]
+CMD ["/app/rust-app"]
