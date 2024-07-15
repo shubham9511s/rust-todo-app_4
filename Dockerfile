@@ -5,13 +5,13 @@ FROM rust:1.79.0-slim AS builder
 #RUN cd /tmp && USER=root cargo new --bin rust-app
 WORKDIR /app
 
-# Copy the Cargo.toml and Cargo.lock files to the container
-COPY Cargo.toml Cargo.lock ./
-
 # Install necessary build tools and dependencies
 RUN apt-get update && \
     apt-get install -y build-essential pkg-config libssl-dev && \
     rm -rf /var/lib/apt/lists/*
+
+# Copy the Cargo.toml and Cargo.lock files to the container
+COPY Cargo.toml Cargo.lock ./
 
 # Copy the source code to the container
 COPY . . 
@@ -47,5 +47,5 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application
-CMD ["./app/rocket-app"]
+CMD ["./rocket-app"]
 
