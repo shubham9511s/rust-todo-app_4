@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM rust:1.67 AS build
+FROM rust:1 AS build
 
 # Install cargo-build-deps for better dependency caching
 RUN cargo install cargo-build-deps
