@@ -34,8 +34,8 @@ WORKDIR /app
 # Create a non-root user and group
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Copy the built binary from the builder stage
-COPY --from=rust-builder /tmp/rust-app/target/release/rust-app .
+# Copy the built binary from the builder stage and change ownership
+COPY --from=rust-builder /tmp/rust-app/target/release/rust-app /app/rust-app
 
 # Set permissions and ownership
 RUN chown appuser:appgroup /app/rust-app && \
@@ -48,4 +48,4 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application
-CMD ["./rust-app"]
+CMD ["./app/rust-app"]
