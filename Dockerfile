@@ -47,7 +47,8 @@ USER appuser
 EXPOSE 8000
 
 # # Command to run the application
- CMD ["./rocket-app"]
+ #CMD ["./rocket-app"]
+ CMD [ "sleep","50000" ]
 
 
 ########################################################################################
