@@ -35,7 +35,7 @@ WORKDIR /app
 #RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the built binary from the builder stage and change ownership
-COPY --from=builder /target/release/rocket-app ./
+COPY --from=builder /app/target/release/rocket-app ./
 
 # Set permissions and ownership
 #RUN chown appuser:appgroup /app/rocket-app 
