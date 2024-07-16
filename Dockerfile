@@ -34,13 +34,13 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Create a non-root user and group
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
 # Copy the built binary from the builder stage and change ownership
 COPY --from=builder /app/target/release/rocket-app ./
 
 # Set permissions and ownership
-RUN chown appuser:appgroup /app/rocket-app 
+RUN chown appuser:appgroup /app/rocket-app
 
 # Switch to the non-root user
 USER appuser
