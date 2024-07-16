@@ -19,7 +19,6 @@ COPY . .
 # Build the application
 RUN cargo build --release
 
-RUN cargo fix --bin "rocket-app"
 
 #################################################################################
 
