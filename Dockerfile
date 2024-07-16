@@ -22,31 +22,54 @@ RUN cargo build --release
 
 #################################################################################
 
-# # Stage 2: Final stage using Alpine
-# FROM alpine:latest
+# Stage 2: Final stage using Alpine
+FROM alpine:latest
 
-# # Install necessary runtime dependencies (if any)
-# RUN apk add --no-cache ca-certificates
+# Install necessary runtime dependencies (if any)
+RUN apk add --no-cache ca-certificates
 
-# # Set the working directory inside the final container
-# WORKDIR /app
+# Set the working directory inside the final container
+WORKDIR /app
 
-# # Create a non-root user and group
-# RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Create a non-root user and group
+#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# # Copy the built binary from the builder stage and change ownership
-# COPY --from=builder /app/target/release/rocket-app ./
+# Copy the built binary from the builder stage and change ownership
+COPY --from=builder /target/release/rocket-app ./
 
-# # Set permissions and ownership
-# RUN chown appuser:appgroup /app/rocket-app 
+# Set permissions and ownership
+#RUN chown appuser:appgroup /app/rocket-app 
 
-# # Switch to the non-root user
-# USER appuser
+# Switch to the non-root user
+#USER appuser
 
-# # Expose the port the app runs on
-# EXPOSE 8000
+# Expose the port the app runs on
+EXPOSE 8000
 
 # # Command to run the application
-# CMD ["./app/rocket-app"]
+# CMD ["./"]
 
 CMD [ "sleep","50000" ]
+
+########################################################################################
+
+
+## This Docker file for testing purpose ##
+
+# FROM rust:1.79.0-slim 
+
+# RUN cargo install cargo-build-deps
+
+# RUN cd /tmp && USER=root cargo new --bin rust-app
+
+# WORKDIR /tmp/rust-app
+
+# COPY Cargo.toml Cargo.lock ./
+
+# RUN cargo build-deps --release
+
+# COPY src /tmp/rust-app/src
+
+# RUN cargo build  --release
+
+# CMD [ "sleep","50000" ]
