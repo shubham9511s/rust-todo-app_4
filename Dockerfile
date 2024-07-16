@@ -15,7 +15,7 @@ RUN apt-get update && \
 
 
 # Copy the source code to the container
-COPY src /app/src
+COPY . .
 
 # Build the application
 RUN cargo build --release
