@@ -32,16 +32,16 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /app
 
 # Create a non-root user and group
-#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the built binary from the builder stage and change ownership
 COPY --from=builder /app/target/release/rocket-app ./
 
 # Set permissions and ownership
-#RUN chown appuser:appgroup /app/rocket-app 
+RUN chown appuser:appgroup /app/rocket-app 
 
 # Switch to the non-root user
-#USER appuser
+USER appuser
 
 # Expose the port the app runs on
 EXPOSE 8000
@@ -49,7 +49,6 @@ EXPOSE 8000
 # # Command to run the application
  CMD ["./rocket-app"]
 
-#CMD [ "sleep","50000" ]
 
 ########################################################################################
 
