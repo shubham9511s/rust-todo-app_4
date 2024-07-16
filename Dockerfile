@@ -23,7 +23,7 @@ RUN cargo build --release
 #################################################################################
 
 # Stage 2: Final stage using Ubuntu
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Install necessary runtime dependencies
 RUN apt-get update && \
