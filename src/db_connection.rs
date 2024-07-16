@@ -9,7 +9,7 @@ use sqlx::{Pool, Postgres};
 
 
 pub async fn create_pool() -> Result<Pool<Postgres>, sqlx::Error> {
-    let pool = Pool::connect("postgres://postgres:Sai2025@localhost:5432/postgres").await?;
+    let pool = Pool::connect("postgres://postgres:shubhamshinde@rust-database.cbycqgus0557.eu-north-1.rds.amazonaws.com:5432/rust-database").await?;
     Ok(pool)
 }
 
