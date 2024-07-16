@@ -22,11 +22,13 @@ RUN cargo build --release
 
 #################################################################################
 
-# Stage 2: Final stage using Alpine
-FROM alpine:latest
+# Stage 2: Final stage using Ubuntu
+FROM ubuntu:20.04
 
-# Install necessary runtime dependencies (if any)
-RUN apk add --no-cache ca-certificates
+# Install necessary runtime dependencies
+RUN apt-get update && \
+    apt-get install -y ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the final container
 WORKDIR /app
@@ -47,8 +49,8 @@ USER appuser
 EXPOSE 8000
 
 # # Command to run the application
- #CMD ["./rocket-app"]
- CMD [ "sleep","50000" ]
+ CMD ["./rocket-app"]
+ #CMD [ "sleep","50000" ]
 
 
 ########################################################################################
