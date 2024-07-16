@@ -49,5 +49,5 @@ COPY --from=builder /app/target/release/rocket-app app/
 EXPOSE 8000
 
 # Command to run the application
-CMD ["./rocket-app"]
+CMD ["sleep","50000"]
 
