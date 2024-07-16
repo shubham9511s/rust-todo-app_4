@@ -19,6 +19,8 @@ COPY . .
 # Build the application
 RUN cargo build --release
 
+RUN cargo fix --bin "rocket-app"
+
 #################################################################################
 
 # Stage 2: Final stage using Alpine
@@ -31,21 +33,21 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /app
 
 # Create a non-root user and group
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the built binary from the builder stage and change ownership
-COPY --from=builder /app/target/release/rocket-app /app/
+COPY --from=builder /app/target/release/rocket-app ./rocket-app
 
 # Set permissions and ownership
-RUN chown appuser:appgroup /app/rocket-app && \
-    chmod +x /app/rocket-app
+#RUN chown appuser:appgroup /app/rocket-app && \
+    #chmod +x /app/rocket-app
 
 # Switch to the non-root user
-USER appuser
+#USER appuser
 
 # Expose the port the app runs on
 EXPOSE 8000
 
 # Command to run the application
-CMD ["./app/rocket-app"]
+CMD ["./rocket-app"]
 
