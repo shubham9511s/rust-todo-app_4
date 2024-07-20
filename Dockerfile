@@ -48,6 +48,10 @@ USER appuser
 # Expose the port the app runs on
 EXPOSE 8000
 
+COPY Rocket.toml ./
+
+ENV ROCKET_ENV=production
+
 # # Command to run the application
  CMD ["./rocket-app"]
  #CMD [ "sleep","50000" ]
