@@ -39,7 +39,7 @@ async fn validate_api_key(api_key: &str) -> Result<bool, reqwest::Error> {
     }
 
     let client = reqwest::Client::new();
-    let res = client.post("http://13.233.145.199:9090/validate-api-key")
+    let res = client.post("http://15.206.210.252:9090/validate-api-key")
         .json(&json!({"APIKey": api_key}))
         .send()
         .await?;
