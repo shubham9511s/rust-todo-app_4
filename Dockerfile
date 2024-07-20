@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy the Cargo.toml and Cargo.lock files to the container
-COPY Cargo.toml Cargo.lock rocket.toml ./
+COPY Cargo.toml Cargo.lock Rocket.toml ./
 
 # Copy the source code to the container
 COPY . .
