@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: rust
-        image: shubhamshinde2206/rust:tag
+        image: shubhamshinde2206/rust:10039883360
         ports:
         - containerPort: 8000
 
