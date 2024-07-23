@@ -39,7 +39,7 @@ async fn validate_api_key(api_key: &str) -> Result<bool, reqwest::Error> {
     }
 
     let client = reqwest::Client::new();
-    let res = client.post("http://k8s-todo-mainlb-8ddedbbfde-1583705440.ap-south-1.elb.amazonaws.com/go-1/validate-api-key")
+    let res = client.post("http://k8s-todo-mainlb-8ddedbbfde-1583705440.ap-south-1.elb.amazonaws.com/validate-api-key")
         .json(&json!({"APIKey": api_key}))
         .send()
         .await?;
