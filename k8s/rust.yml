@@ -28,6 +28,7 @@ kind: Service
 metadata:
   name: rust-service
 spec:
+  type: NodePort
   selector:
     app: rust
   ports:
